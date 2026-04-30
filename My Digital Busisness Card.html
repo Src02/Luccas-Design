@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luccas Magalhães | Designer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- VARIÁVEIS E ROOT --- */
+        :root {
+            --bg-blueprint: #0d131c;    
+            --accent-cyan: #00f2ff;
+            --accent-green: #25d366;      
+            --navy-blue: #080c12;
+            --text-main: #d1d7e0;
+            --glass-bg: rgba(8, 12, 18, 0.7); 
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- RESET E BASE --- */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        body {
+            background: var(--bg-blueprint);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: 100%;
+            z-index: -1;
+            background: var(--bg-blueprint);
+        }
+
+        /* --- CONTAINERS --- */
+        .main-container {
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            width: 100%; 
+            padding-top: 5vh; 
+            padding-bottom: 50px;
+            position: relative; 
+            z-index: 1;
+        }
+
+        .card, 
+        .content-section, 
+        .bottom-links, 
+        #explainer-box {
+            width: 90%; 
+            max-width: 420px; 
+        }
+
+        /* --- CARD PRINCIPAL --- */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            height: 280px; 
+            display: flex; 
+            flex-direction: column;
+            border: 1px solid var(--glass-border);
+            position: relative; 
+            overflow: hidden;
+            border-radius: 8px; 
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            background: var(--accent-cyan);
+            width: 60px; 
+            height: 3px;
+            top: 0; 
+            left: 20px; 
+            z-index: 10;
+            animation: cyanPulse 9s ease-in-out infinite;
+            border-radius: 0 0 3px 3px;
+        }
+
+        @keyframes cyanPulse {
+            0%, 15%, 100% { opacity: 1; }
+            5% { opacity: 0.3; background: #fff; }
+            10% { opacity: 1; }
+        }
+
+        .card-content { 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            width: 100%;
+            height: 100%;
+        }
+        
+        .logo-area { 
+            width: 80px; 
+            height: 80px; 
+            margin-bottom: 15px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        
+        .logo-area svg { 
+            width: 100%; 
+            height: 100%; 
+            fill: var(--accent-cyan); 
+        }
+
+        h1 { 
+            font-size: 22px; 
+            font-weight: 900; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            text-align: center; 
+        }
+
+        .tag { 
+            font-size: 10px; 
+            opacity: 0.6; 
+            margin-top: 8px; 
+            letter-spacing: 4px; 
+            text-transform: uppercase; 
+        }
+
+        /* --- SEÇÕES DE CONTEÚDO --- */
+        .content-section { 
+            margin-top: 20px; 
+        }
+        
+        .info-block { 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border); 
+            padding: 25px; 
+            position: relative; 
+            border-radius: 8px;
+        }
+
+        .info-block h2 {
+            font-size: 11px; 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            margin-bottom: 15px;
+            border-left: 3px solid var(--accent-cyan); 
+            padding-left: 15px;
+        }
+
+        .skills-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; 
+        }
+
+        .skill-item { 
+            font-size: 9px; 
+            text-transform: uppercase; 
+            opacity: 0.8; 
+            display: flex; 
+            align-items: center; 
+            font-weight: 600; 
+        }
+
+        .skill-item::before { 
+            content: "::"; 
+            color: var(--accent-cyan); 
+            margin-right: 8px; 
+        }
+
+        /* --- BOTÕES E LINKS --- */
+        .bottom-links { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; 
+            margin-top: 20px; 
+        }
+        
+        .btn-bottom { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            color: var(--text-main); 
+            cursor: pointer; 
+            font-size: 10px; 
+            font-weight: 700;
+            text-transform: uppercase; 
+            height: 50px; 
+            border: 1px solid var(--glass-border); 
+            transition: 0.3s;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif; 
+            outline: none; 
+        }
+        
+        .btn-bottom:hover, 
+        .btn-bottom.active { 
+            background: rgba(0, 242, 255, 0.15); 
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.15); 
+        }
+
+        .btn-bottom:focus-visible {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 2px var(--bg-blueprint), 0 0 0 4px var(--accent-cyan);
+        }
+
+        .btn-full { 
+            grid-column: span 2; 
+        }
+
+        /* --- PAINEL EXPLAINER --- */
+        #explainer-box { 
+            margin-top: 20px; 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border); 
+            padding: 25px; 
+            display: none; 
+            animation: slideDown 0.3s ease-out; 
+            border-radius: 8px;
+        }
+
+        @keyframes slideDown { 
+            from { opacity: 0; transform: translateY(-10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        #explainer-text { 
+            font-size: 12px; 
+            line-height: 1.6; 
+            margin-bottom: 20px; 
+            opacity: 0.9; 
+        }
+        
+        .action-btn {
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%; 
+            height: 40px;
+            background: var(--accent-green); 
+            color: var(--navy-blue);
+            text-decoration: none; 
+            font-size: 10px;
+            font-weight: 900; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            border-radius: 4px;
+        }
+        
+        .action-btn:hover { 
+            background: var(--accent-cyan); 
+            color: rgba(0, 0, 0, 0.85); 
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.5);
+            letter-spacing: 1.5px;
+        }
+
+        .explainer-header { 
+            font-size: 9px; 
+            font-family: monospace; 
+            color: var(--accent-cyan); 
+            margin-bottom: 10px; 
+            text-transform: uppercase; 
+            display: block; 
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 350px) {
+            .info-block { padding: 20px 15px; }
+            h1 { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- BACKGROUND -->
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="main-container">
+        <!-- CARD TOPO -->
+        <div class="card">
+            <div style="font-size: 8px; position: absolute; top: 12px; right: 15px; font-family: monospace; opacity: 0.5; letter-spacing: 1px;">v.1998</div>
+            <div class="card-content">
+                <div class="logo-area">
+                    <svg viewBox="0 0 8334 8334" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3314.691,6311.377l-2046.616,0l0,-4498.775l853.56,0l0,3763.739l530.645,0l0,-3763.739l1268.799,0l942.656,2896.949l926.052,-2896.949l1275.413,0l0,4498.775l-827.102,0l0,-3938.419l-1245.85,3938.419l-425.093,0l-1252.465,-3938.419l0,3938.419Zm-8.937,140.381l0,68.91l-2037.679,0l0,-68.91l2037.679,0Z" />
+                    </svg>
+                </div>
+                <h1>Luccas Magalhães</h1>
+                <p class="tag">Graphic Designer</p>
+            </div>
+        </div>
+
+        <!-- O QUE EU POSSO FAZER -->
+        <div class="content-section">
+            <div class="info-block">
+                <h2>O que eu posso fazer</h2>
+                <div class="skills-grid">
+                    <div class="skill-item">Identidade Visual</div>
+                    <div class="skill-item">Mídia Social</div>
+                    <div class="skill-item">Edição de Vídeo</div>
+                    <div class="skill-item">UI / UX</div>
+                    <div class="skill-item">Tipografia</div>
+                    <div class="skill-item">Design Editorial</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FERRAMENTAS -->
+        <div class="content-section">
+            <div class="info-block">
+                <h2>Ferramentas</h2>
+                <div class="skills-grid">
+                    <div class="skill-item">Photoshop</div>
+                    <div class="skill-item">Illustrator</div>
+                    <div class="skill-item">InDesign</div>
+                    <div class="skill-item">Premiere</div>
+                    <div class="skill-item">Affinity</div>
+                    <div class="skill-item">Figma</div>
+                    <div class="skill-item">CorelDRAW</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LINKS -->
+        <div class="bottom-links">
+            <button class="btn-bottom btn-full" onclick="showExplainer('portfolio', this)">Portfolio / Behance</button>
+            <button class="btn-bottom" onclick="showExplainer('linkedin', this)">LinkedIn</button>
+            <button class="btn-bottom" onclick="showExplainer('contato', this)">Contato</button>
+        </div>
+
+        <!-- CAIXA EXPLAINER -->
+        <div id="explainer-box">
+            <span class="explainer-header" id="explainer-title">INFO //</span>
+            <p id="explainer-text"></p>
+            
+            <div id="contact-options" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <a href="mailto:luccasmagal@gmail.com" class="action-btn">E-mail</a>
+                <a href="https://wa.me/5583981404889" class="action-btn" target="_blank">WhatsApp</a>
+            </div>
+            
+            <a href="#" id="explainer-action" target="_blank" class="action-btn">Acessar Link</a>
+        </div>
+    </div>
+
+    <script>
+        // --- BACKGROUND ANIMATION ENGINE ---
+        (function() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let points = [];
+            let centerX, centerY;
+            let animationId;
+
+            const config = { 
+                pointCount: window.innerWidth < 500 ? 40 : 80, 
+                pointColor: '#00f2ff', 
+                linkDistance: 150, 
+                minSpeed: 0.2, 
+                maxSpeed: 0.5 
+            };
+            
+            function resize() { 
+                canvas.width = window.innerWidth; 
+                canvas.height = window.innerHeight; 
+                centerX = canvas.width / 2; 
+                centerY = canvas.height / 2; 
+                config.pointCount = window.innerWidth < 500 ? 40 : 80;
+                initPoints(); 
+            }
+            
+            class Point {
+                constructor() { this.init(true); }
+
+                init(randomize = false) {
+                    if (randomize) { 
+                        this.x = Math.random() * canvas.width; 
+                        this.y = Math.random() * canvas.height; 
+                    } else { 
+                        if (Math.random() > 0.5) { 
+                            this.x = Math.random() > 0.5 ? 0 : canvas.width; 
+                            this.y = Math.random() * canvas.height; 
+                        } else { 
+                            this.x = Math.random() * canvas.width; 
+                            this.y = Math.random() > 0.5 ? 0 : canvas.height; 
+                        } 
+                    }
+
+                    const angle = Math.atan2(centerY - this.y, centerX - this.x);
+                    const speed = Math.random() * (config.maxSpeed - config.minSpeed) + config.minSpeed;
+                    this.vx = Math.cos(angle) * speed; 
+                    this.vy = Math.sin(angle) * speed;
+                }
+
+                update() {
+                    this.x += this.vx; 
+                    this.y += this.vy;
+                    const dx = this.x - centerX; 
+                    const dy = this.y - centerY;
+                    
+                    if (Math.sqrt(dx*dx + dy*dy) < 50) this.init();
+                    if (this.x < -20 || this.x > canvas.width + 20 || this.y < -20 || this.y > canvas.height + 20) this.init();
+                }
+
+                draw() { 
+                    ctx.beginPath(); 
+                    ctx.arc(this.x, this.y, 1, 0, Math.PI * 2); 
+                    ctx.fillStyle = config.pointColor; 
+                    ctx.globalAlpha = 0.3; 
+                    ctx.fill(); 
+                }
+            }
+            
+            function initPoints() { 
+                points = []; 
+                for (let i = 0; i < config.pointCount; i++) points.push(new Point()); 
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < points.length; i++) {
+                    points[i].update(); 
+                    points[i].draw();
+                    for (let j = i + 1; j < points.length; j++) {
+                        const dx = points[i].x - points[j].x; 
+                        const dy = points[i].y - points[j].y; 
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        
+                        if (dist < config.linkDistance) { 
+                            ctx.globalAlpha = (1 - (dist / config.linkDistance)) * 0.15; 
+                            ctx.strokeStyle = config.pointColor; 
+                            ctx.beginPath(); 
+                            ctx.moveTo(points[i].x, points[i].y); 
+                            ctx.lineTo(points[j].x, points[j].y); 
+                            ctx.stroke(); 
+                        }
+                    }
+                }
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) { 
+                    cancelAnimationFrame(animationId); 
+                } else { 
+                    animate(); 
+                }
+            });
+
+            window.addEventListener('resize', resize); 
+            resize(); 
+            animate();
+        })();
+
+        // --- LÓGICA DO PAINEL EXPLAINER ---
+        const content = {
+            portfolio: { 
+                text: "Explorar projetos de branding, social media e UI no Behance.", 
+                link: "https://www.behance.net/luccasmagalhes", 
+                label: "Abrir Portfólio" 
+            },
+            linkedin: { 
+                text: "Visualizar histórico profissional e conectar-se na rede.", 
+                link: "https://www.linkedin.com/in/luccas-magalh%C3%A3es-34bb22a2/", 
+                label: "Acessar LinkedIn" 
+            },
+            contato: { 
+                text: "Selecione o canal de preferência para iniciarmos sua demanda:", 
+                link: "#", 
+                label: "" 
+            }
+        };
+
+        function showExplainer(type, element) {
+            const box = document.getElementById('explainer-box');
+            const text = document.getElementById('explainer-text');
+            const title = document.getElementById('explainer-title');
+            const action = document.getElementById('explainer-action');
+            const contactDiv = document.getElementById('contact-options');
+            const buttons = document.querySelectorAll('.btn-bottom');
+
+            if (element.classList.contains('active')) {
+                box.style.display = 'none';
+                element.classList.remove('active');
+                return;
+            }
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            
+            title.innerText = `INFO // ${type.toUpperCase()}`;
+            text.innerText = content[type].text;
+            
+            if (type === 'contato') {
+                action.style.display = 'none';
+                contactDiv.style.display = 'grid';
+            } else {
+                action.style.display = 'inline-flex';
+                contactDiv.style.display = 'none';
+                action.href = content[type].link;
+                action.innerText = content[type].label;
+            }
+
+            box.style.display = 'block';
+            
+            setTimeout(() => {
+                box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+    </script>
+</body>
+</html>
