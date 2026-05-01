@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* --- VARIÁVEIS E ROOT --- */
+        /* --- VARIÁVEIS --- */
         :root {
             --bg-blueprint: #0d131c;
             --accent-cyan: #00f2ff;
@@ -18,12 +18,8 @@
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        /* --- RESET E BASE --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* --- BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background: var(--bg-blueprint);
@@ -35,36 +31,29 @@
 
         #bg-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
-            background: var(--bg-blueprint);
         }
 
-        /* --- CONTAINERS --- */
+        /* --- CONTAINER DINÂMICO --- */
         .main-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
-            padding-top: 5vh;
-            padding-bottom: 50px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .card,
-        .content-section,
-        .bottom-links,
-        #explainer-box {
             width: 90%;
-            max-width: 420px;
+            max-width: 1000px; /* Aumentado para acomodar lado a lado no desktop */
+            margin: 0 auto;
+            padding: 5vh 0 50px 0;
+            gap: 20px;
+            z-index: 1;
+            position: relative;
         }
 
-        /* --- CARD PRINCIPAL --- */
+        /* --- CARD TOPO --- */
         .card {
+            width: 100%;
+            max-width: 420px; /* Mantém o visual de "cartão" centralizado */
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -73,27 +62,8 @@
             flex-direction: column;
             border: 1px solid var(--glass-border);
             position: relative;
-            overflow: hidden;
             border-radius: 8px;
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            background: var(--accent-cyan);
-            width: 60px;
-            height: 3px;
-            top: 0;
-            left: 20px;
-            z-index: 10;
-            animation: cyanPulse 9s ease-in-out infinite;
-            border-radius: 0 0 3px 3px;
-        }
-
-        @keyframes cyanPulse {
-            0%, 15%, 100% { opacity: 1; }
-            5% { opacity: 0.3; background: #fff; }
-            10% { opacity: 1; }
+            overflow: hidden;
         }
 
         .card-content {
@@ -102,44 +72,24 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+        }
+
+        .logo-area svg { width: 80px; height: 80px; fill: var(--accent-cyan); margin-bottom: 15px; }
+        h1 { font-size: 22px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; text-align: center; }
+        .tag { font-size: 10px; opacity: 0.6; margin-top: 8px; letter-spacing: 4px; text-transform: uppercase; }
+
+        /* --- WRAPPER PARA SEÇÕES (MÁGICA DO DESKTOP) --- */
+        .sections-wrapper {
+            display: grid;
+            grid-template-columns: 1fr; /* Mobile: Uma coluna */
+            gap: 20px;
             width: 100%;
-            height: 100%;
         }
 
-        .logo-area {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .logo-area svg {
-            width: 100%;
-            height: 100%;
-            fill: var(--accent-cyan);
-        }
-
-        h1 {
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        .tag {
-            font-size: 10px;
-            opacity: 0.6;
-            margin-top: 8px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
-
-        /* --- SEÇÕES DE CONTEÚDO --- */
-        .content-section {
-            margin-top: 20px;
+        @media (min-width: 768px) {
+            .sections-wrapper {
+                grid-template-columns: 1fr 1fr; /* Desktop: Duas colunas lado a lado */
+            }
         }
 
         .info-block {
@@ -147,7 +97,6 @@
             backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
             padding: 25px;
-            position: relative;
             border-radius: 8px;
         }
 
@@ -175,56 +124,54 @@
             font-weight: 600;
         }
 
-        .skill-item::before {
-            content: "::";
-            color: var(--accent-cyan);
-            margin-right: 8px;
-        }
+        .skill-item::before { content: "::"; color: var(--accent-cyan); margin-right: 8px; }
 
-        /* --- BOTÕES E LINKS --- */
+        /* --- BOTÕES (DINÂMICOS) --- */
         .bottom-links {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr); /* 2x2 no Mobile */
             gap: 10px;
-            margin-top: 20px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        @media (min-width: 768px) {
+            .bottom-links {
+                grid-template-columns: repeat(4, 1fr); /* 1x4 no Desktop */
+            }
         }
 
         .btn-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 50px;
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(8px);
             color: var(--text-main);
-            cursor: pointer;
+            border: 1px solid var(--glass-border);
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            height: 50px;
-            border: 1px solid var(--glass-border);
-            transition: 0.3s;
+            cursor: pointer;
             border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            outline: none;
+            transition: 0.3s;
         }
 
-        .btn-bottom:hover,
-        .btn-bottom.active {
+        .btn-bottom:hover, .btn-bottom.active {
             background: rgba(0, 242, 255, 0.15);
             border-color: var(--accent-cyan);
             box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
         }
 
-        /* --- PAINEL EXPLAINER --- */
+        /* --- EXPLAINER --- */
         #explainer-box {
-            margin-top: 20px;
+            width: 100%;
+            max-width: 1000px;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             padding: 25px;
             display: none;
-            animation: slideDown 0.3s ease-out;
             border-radius: 8px;
+            animation: slideDown 0.3s ease-out;
         }
 
         @keyframes slideDown {
@@ -232,67 +179,40 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        #explainer-text {
-            font-size: 12px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            opacity: 0.9;
-        }
+        #explainer-text { font-size: 12px; line-height: 1.6; margin-bottom: 20px; }
 
         .action-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
-            height: 40px;
+            width: 100%; height: 40px;
             background: var(--accent-green);
             color: var(--navy-blue);
             text-decoration: none;
-            font-size: 10px;
-            font-weight: 900;
+            font-size: 10px; font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 4px;
+            transition: 0.3s;
         }
 
-        .action-btn:hover {
-            background: var(--accent-cyan);
-            color: rgba(0, 0, 0, 0.85);
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.5);
-            letter-spacing: 1.5px;
-        }
+        .action-btn:hover { background: var(--accent-cyan); letter-spacing: 1.5px; }
 
-        .explainer-header {
-            font-size: 9px;
-            font-family: monospace;
-            color: var(--accent-cyan);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            display: block;
-        }
-
-        /* --- RESPONSIVIDADE --- */
-        @media (max-width: 350px) {
-            .info-block { padding: 20px 15px; }
-            h1 { font-size: 18px; }
-        }
     </style>
 </head>
 <body>
-    <!-- BACKGROUND -->
+
     <canvas id="bg-canvas"></canvas>
 
     <div class="main-container">
-        <!-- CARD TOPO -->
+        
+        <!-- CARD TOPO (Conteúdo Original) -->
         <div class="card">
             <div style="font-size: 8px; position: absolute; top: 12px; right: 15px; font-family: monospace; opacity: 0.5; letter-spacing: 1px;">v.1998</div>
             <div class="card-content">
                 <div class="logo-area">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <title>Logo LM - Cyan Edition</title>
-                        <path d="M10 20V80H35V72H18V20H10ZM40 80H48V35L60 55L72 35V80H80V20H72L60 40L48 20H40V80Z" fill="#00FFFF" />
-                        <rect x="10" y="86" width="70" height="4" fill="#00FFFF" />
+                    <svg viewBox="0 0 100 100">
+                        <path d="M10 20V80H35V72H18V20H10ZM40 80H48V35L60 55L72 35V80H80V20H72L60 40L48 20H40V80Z" />
+                        <rect x="10" y="86" width="70" height="4" />
                     </svg>
                 </div>
                 <h1>Luccas Magalhães</h1>
@@ -300,8 +220,8 @@
             </div>
         </div>
 
-        <!-- O QUE EU POSSO FAZER -->
-        <div class="content-section">
+        <!-- SEÇÕES (Agora Lado a Lado no Desktop) -->
+        <div class="sections-wrapper">
             <div class="info-block">
                 <h2>O que eu posso fazer</h2>
                 <div class="skills-grid">
@@ -313,10 +233,7 @@
                     <div class="skill-item">Design Editorial</div>
                 </div>
             </div>
-        </div>
 
-        <!-- FERRAMENTAS -->
-        <div class="content-section">
             <div class="info-block">
                 <h2>Ferramentas</h2>
                 <div class="skills-grid">
@@ -331,17 +248,17 @@
             </div>
         </div>
 
-        <!-- LINKS -->
+        <!-- LINKS (Agora em 4 colunas no Desktop) -->
         <div class="bottom-links">
             <button class="btn-bottom" onclick="showExplainer('sobre', this)">Sobre Mim</button>
-            <button class="btn-bottom" onclick="showExplainer('portfolio', this)">Portfólio</button>
+            <button class="btn-bottom" onclick="showExplainer('portfolio', this)">Portfólio / Behance</button>
             <button class="btn-bottom" onclick="showExplainer('linkedin', this)">LinkedIn</button>
             <button class="btn-bottom" onclick="showExplainer('contato', this)">Contato</button>
         </div>
 
-        <!-- CAIXA EXPLAINER -->
+        <!-- EXPLAINER BOX -->
         <div id="explainer-box">
-            <span class="explainer-header" id="explainer-title">INFO //</span>
+            <span id="explainer-title" style="font-size: 9px; color: var(--accent-cyan); display: block; margin-bottom: 10px; font-family: monospace;">INFO //</span>
             <p id="explainer-text"></p>
             
             <div id="contact-options" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -354,160 +271,93 @@
     </div>
 
     <script>
-        // --- BACKGROUND ANIMATION ENGINE ---
+        // --- BACKGROUND COM INTERAÇÃO DO MOUSE (Lógica Original) ---
         (function() {
             const canvas = document.getElementById('bg-canvas');
             const ctx = canvas.getContext('2d');
             let points = [];
             let centerX, centerY;
-            let animationId;
-
             const mouse = { x: null, y: null, radius: 120 };
 
-            const config = { 
-                pointCount: window.innerWidth < 500 ? 40 : 80, 
-                pointColor: '#00f2ff', 
-                linkDistance: 150, 
-                minSpeed: 0.2, 
-                maxSpeed: 0.5 
-            };
+            window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+            window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
 
-            window.addEventListener('mousemove', (e) => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
-            });
-
-            window.addEventListener('mouseleave', () => {
-                mouse.x = null;
-                mouse.y = null;
-            });
-            
-            function resize() { 
-                canvas.width = window.innerWidth; 
-                canvas.height = window.innerHeight; 
-                centerX = canvas.width / 2; 
-                centerY = canvas.height / 2; 
-                config.pointCount = window.innerWidth < 500 ? 40 : 80;
-                initPoints(); 
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                centerX = canvas.width / 2;
+                centerY = canvas.height / 2;
+                initPoints();
             }
-            
+
             class Point {
                 constructor() { this.init(true); }
-
                 init(randomize = false) {
-                    if (randomize) { 
-                        this.x = Math.random() * canvas.width; 
-                        this.y = Math.random() * canvas.height; 
-                    } else { 
-                        if (Math.random() > 0.5) { 
-                            this.x = Math.random() > 0.5 ? 0 : canvas.width; 
-                            this.y = Math.random() * canvas.height; 
-                        } else { 
-                            this.x = Math.random() * canvas.width; 
-                            this.y = Math.random() > 0.5 ? 0 : canvas.height; 
-                        } 
-                    }
-
-                    const angle = Math.atan2(centerY - this.y, centerX - this.x);
-                    const speed = Math.random() * (config.maxSpeed - config.minSpeed) + config.minSpeed;
-                    this.vx = Math.cos(angle) * speed; 
-                    this.vy = Math.sin(angle) * speed;
+                    if (randomize) { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; }
+                    else { this.x = Math.random() * canvas.width; this.y = Math.random() > 0.5 ? 0 : canvas.height; }
+                    this.vx = (Math.random() - 0.5) * 0.6;
+                    this.vy = (Math.random() - 0.5) * 0.6;
                 }
-
                 update() {
-                    this.x += this.vx; 
-                    this.y += this.vy;
-
-                    if (mouse.x !== null && mouse.y !== null) {
-                        const dxMouse = this.x - mouse.x;
-                        const dyMouse = this.y - mouse.y;
-                        const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-
-                        if (distMouse < mouse.radius) {
-                            const force = (mouse.radius - distMouse) / mouse.radius;
-                            this.x += (dxMouse / distMouse) * force * 10;
-                            this.y += (dyMouse / distMouse) * force * 10;
+                    this.x += this.vx; this.y += this.vy;
+                    if (mouse.x) {
+                        const dx = this.x - mouse.x; const dy = this.y - mouse.y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < mouse.radius) {
+                            const force = (mouse.radius - dist) / mouse.radius;
+                            this.x += (dx/dist) * force * 10;
+                            this.y += (dy/dist) * force * 10;
                         }
                     }
-
-                    const dxCenter = this.x - centerX; 
-                    const dyCenter = this.y - centerY;
-                    
-                    if (Math.sqrt(dxCenter*dxCenter + dyCenter*dyCenter) < 50) this.init();
                     if (this.x < -20 || this.x > canvas.width + 20 || this.y < -20 || this.y > canvas.height + 20) this.init();
                 }
-
-                draw() { 
-                    ctx.beginPath(); 
-                    ctx.arc(this.x, this.y, 1, 0, Math.PI * 2); 
-                    ctx.fillStyle = config.pointColor; 
-                    ctx.globalAlpha = 0.3; 
-                    ctx.fill(); 
+                draw() {
+                    ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2);
+                    ctx.fillStyle = '#00f2ff'; ctx.globalAlpha = 0.3; ctx.fill();
                 }
             }
-            
-            function initPoints() { 
-                points = []; 
-                for (let i = 0; i < config.pointCount; i++) points.push(new Point()); 
+
+            function initPoints() {
+                points = [];
+                let count = window.innerWidth < 768 ? 40 : 80;
+                for(let i=0; i<count; i++) points.push(new Point());
             }
-            
+
             function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let i = 0; i < points.length; i++) {
-                    points[i].update(); 
-                    points[i].draw();
-                    for (let j = i + 1; j < points.length; j++) {
-                        const dx = points[i].x - points[j].x; 
-                        const dy = points[i].y - points[j].y; 
-                        const dist = Math.sqrt(dx*dx + dy*dy);
-                        
-                        if (dist < config.linkDistance) { 
-                            ctx.globalAlpha = (1 - (dist / config.linkDistance)) * 0.15; 
-                            ctx.strokeStyle = config.pointColor; 
-                            ctx.beginPath(); 
-                            ctx.moveTo(points[i].x, points[i].y); 
-                            ctx.lineTo(points[j].x, points[j].y); 
-                            ctx.stroke(); 
+                ctx.clearRect(0,0,canvas.width, canvas.height);
+                for(let i=0; i<points.length; i++) {
+                    points[i].update(); points[i].draw();
+                    for(let j=i+1; j<points.length; j++) {
+                        const d = Math.sqrt((points[i].x-points[j].x)**2 + (points[i].y-points[j].y)**2);
+                        if(d < 150) {
+                            ctx.beginPath(); ctx.moveTo(points[i].x, points[i].y); ctx.lineTo(points[j].x, points[j].y);
+                            ctx.strokeStyle = '#00f2ff'; ctx.globalAlpha = (1 - d/150) * 0.15; ctx.stroke();
                         }
                     }
                 }
-                animationId = requestAnimationFrame(animate);
+                requestAnimationFrame(animate);
             }
-            
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) { 
-                    cancelAnimationFrame(animationId); 
-                } else { 
-                    animate(); 
-                }
-            });
-
-            window.addEventListener('resize', resize); 
-            resize(); 
-            animate();
+            window.addEventListener('resize', resize);
+            resize(); animate();
         })();
 
-        // --- LÓGICA DO PAINEL EXPLAINER ---
+        // --- CONTEÚDO ORIGINAL DOS TEXTOS ---
         const content = {
             sobre: {
                 text: "Designer Gráfico focado em traduzir conceitos em soluções visuais precisas. Com uma base técnica sólida, busco unir estética minimalista e funcionalidade em cada projeto. Desenvolvo identidades que comunicam propósito e interfaces que otimizam a experiência do usuário.",
-                link: "#",
-                label: ""
+                link: "#", label: ""
             },
             portfolio: { 
                 text: "Explorar projetos de branding, social media e UI no Behance.", 
-                link: "https://www.behance.net/luccasmagalhes", 
-                label: "Abrir Portfólio" 
+                link: "https://www.behance.net/luccasmagalhes", label: "Abrir Portfólio" 
             },
             linkedin: { 
                 text: "Visualizar histórico profissional e conectar-se na rede.", 
-                link: "https://www.linkedin.com/in/luccas-magalh%C3%A3es-34bb22a2/", 
-                label: "Acessar LinkedIn" 
+                link: "https://www.linkedin.com/in/luccas-magalh%C3%A3es-34bb22a2/", label: "Acessar LinkedIn" 
             },
             contato: { 
                 text: "Selecione o canal de preferência para iniciarmos sua demanda:", 
-                link: "#", 
-                label: "" 
+                link: "#", label: "" 
             }
         };
 
@@ -535,7 +385,7 @@
                 action.style.display = 'none';
                 contactDiv.style.display = 'grid';
             } else if (type === 'sobre') {
-                action.style.display = 'none'; // Não precisa de botão de link para o Sobre Mim
+                action.style.display = 'none';
                 contactDiv.style.display = 'none';
             } else {
                 action.style.display = 'inline-flex';
@@ -545,10 +395,7 @@
             }
 
             box.style.display = 'block';
-            
-            setTimeout(() => {
-                box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 100);
+            setTimeout(() => { box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
         }
     </script>
 </body>
