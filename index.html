@@ -27,6 +27,7 @@
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
+            line-height: 1.5;
         }
 
         #bg-canvas {
@@ -42,10 +43,10 @@
             flex-direction: column;
             align-items: center;
             width: 90%;
-            max-width: 1000px; /* Aumentado para acomodar lado a lado no desktop */
+            max-width: 1100px; /* Aumentado levemente para desktop */
             margin: 0 auto;
-            padding: 5vh 0 50px 0;
-            gap: 20px;
+            padding: 5vh 0 80px 0;
+            gap: 30px; /* Mais espaço entre blocos no desktop */
             z-index: 1;
             position: relative;
         }
@@ -53,16 +54,17 @@
         /* --- CARD TOPO --- */
         .card {
             width: 100%;
-            max-width: 420px; /* Mantém o visual de "cartão" centralizado */
+            max-width: 480px; /* Um pouco mais largo no desktop */
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            height: 280px;
+            min-height: 300px; /* Altura mínima em vez de fixa para acessibilidade */
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             border: 1px solid var(--glass-border);
             position: relative;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
         }
 
@@ -74,21 +76,29 @@
             align-items: center;
         }
 
-        .logo-area svg { width: 80px; height: 80px; fill: var(--accent-cyan); margin-bottom: 15px; }
-        h1 { font-size: 22px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; text-align: center; }
-        .tag { font-size: 10px; opacity: 0.6; margin-top: 8px; letter-spacing: 4px; text-transform: uppercase; }
+        .logo-area svg { width: 100px; height: 100px; fill: var(--accent-cyan); margin-bottom: 20px; }
+        
+        /* Tipografia Escalável */
+        h1 { font-size: 24px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; text-align: center; }
+        .tag { font-size: 12px; opacity: 0.7; margin-top: 10px; letter-spacing: 5px; text-transform: uppercase; }
 
-        /* --- WRAPPER PARA SEÇÕES (MÁGICA DO DESKTOP) --- */
+        @media (min-width: 768px) {
+            h1 { font-size: 28px; }
+            .tag { font-size: 14px; }
+        }
+
+        /* --- WRAPPER PARA SEÇÕES --- */
         .sections-wrapper {
             display: grid;
-            grid-template-columns: 1fr; /* Mobile: Uma coluna */
-            gap: 20px;
+            grid-template-columns: 1fr;
+            gap: 25px;
             width: 100%;
         }
 
         @media (min-width: 768px) {
             .sections-wrapper {
-                grid-template-columns: 1fr 1fr; /* Desktop: Duas colunas lado a lado */
+                grid-template-columns: 1fr 1fr;
+                gap: 35px;
             }
         }
 
@@ -96,58 +106,67 @@
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            padding: 25px;
-            border-radius: 8px;
+            padding: 35px; /* Mais preenchimento */
+            border-radius: 12px;
         }
 
         .info-block h2 {
-            font-size: 11px;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 3px;
-            margin-bottom: 15px;
-            border-left: 3px solid var(--accent-cyan);
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-cyan);
             padding-left: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .info-block h2 { font-size: 16px; }
         }
 
         .skills-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 15px;
         }
 
         .skill-item {
-            font-size: 9px;
+            font-size: 12px; /* Aumentado para leitura */
             text-transform: uppercase;
-            opacity: 0.8;
+            opacity: 0.9;
             display: flex;
             align-items: center;
             font-weight: 600;
         }
 
-        .skill-item::before { content: "::"; color: var(--accent-cyan); margin-right: 8px; }
+        @media (min-width: 768px) {
+            .skill-item { font-size: 14px; }
+        }
 
-        /* --- BOTÕES (DINÂMICOS) --- */
+        .skill-item::before { content: "::"; color: var(--accent-cyan); margin-right: 10px; }
+
+        /* --- BOTÕES --- */
         .bottom-links {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2x2 no Mobile */
-            gap: 10px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
             width: 100%;
-            max-width: 1000px;
         }
 
         @media (min-width: 768px) {
             .bottom-links {
-                grid-template-columns: repeat(4, 1fr); /* 1x4 no Desktop */
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
             }
         }
 
         .btn-bottom {
-            height: 50px;
+            min-height: 60px; /* Maior área de clique */
+            padding: 10px;
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(8px);
             color: var(--text-main);
             border: 1px solid var(--glass-border);
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 700;
             text-transform: uppercase;
             cursor: pointer;
@@ -155,47 +174,59 @@
             transition: 0.3s;
         }
 
+        @media (min-width: 768px) {
+            .btn-bottom { font-size: 13px; }
+        }
+
         .btn-bottom:hover, .btn-bottom.active {
             background: rgba(0, 242, 255, 0.15);
             border-color: var(--accent-cyan);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.2);
+            transform: translateY(-2px);
         }
 
         /* --- EXPLAINER --- */
         #explainer-box {
             width: 100%;
-            max-width: 1000px;
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            padding: 25px;
+            padding: 40px;
             display: none;
-            border-radius: 8px;
-            animation: slideDown 0.3s ease-out;
+            border-radius: 12px;
+            animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        #explainer-text { font-size: 12px; line-height: 1.6; margin-bottom: 20px; }
+        #explainer-text { 
+            font-size: 14px; 
+            line-height: 1.8; 
+            margin-bottom: 25px; 
+        }
+
+        @media (min-width: 768px) {
+            #explainer-text { font-size: 17px; }
+        }
 
         .action-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 100%; height: 40px;
+            width: 100%; min-height: 50px;
             background: var(--accent-green);
             color: var(--navy-blue);
             text-decoration: none;
-            font-size: 10px; font-weight: 900;
+            font-size: 13px; font-weight: 900;
             text-transform: uppercase;
-            border-radius: 4px;
+            border-radius: 6px;
             transition: 0.3s;
         }
 
-        .action-btn:hover { background: var(--accent-cyan); letter-spacing: 1.5px; }
+        .action-btn:hover { background: var(--accent-cyan); letter-spacing: 2px; }
 
     </style>
 </head>
@@ -205,9 +236,9 @@
 
     <div class="main-container">
         
-        <!-- CARD TOPO (Conteúdo Original) -->
+        <!-- CARD TOPO -->
         <div class="card">
-            <div style="font-size: 8px; position: absolute; top: 12px; right: 15px; font-family: monospace; opacity: 0.5; letter-spacing: 1px;">v.1998</div>
+            <div style="font-size: 10px; position: absolute; top: 15px; right: 20px; font-family: monospace; opacity: 0.5; letter-spacing: 1px;">v.1998</div>
             <div class="card-content">
                 <div class="logo-area">
                     <svg viewBox="0 0 100 100">
@@ -220,7 +251,7 @@
             </div>
         </div>
 
-        <!-- SEÇÕES (Agora Lado a Lado no Desktop) -->
+        <!-- SEÇÕES -->
         <div class="sections-wrapper">
             <div class="info-block">
                 <h2>O que eu posso fazer</h2>
@@ -248,7 +279,7 @@
             </div>
         </div>
 
-        <!-- LINKS (Agora em 4 colunas no Desktop) -->
+        <!-- LINKS -->
         <div class="bottom-links">
             <button class="btn-bottom" onclick="showExplainer('sobre', this)">Sobre Mim</button>
             <button class="btn-bottom" onclick="showExplainer('portfolio', this)">Portfólio</button>
@@ -258,10 +289,10 @@
 
         <!-- EXPLAINER BOX -->
         <div id="explainer-box">
-            <span id="explainer-title" style="font-size: 9px; color: var(--accent-cyan); display: block; margin-bottom: 10px; font-family: monospace;">INFO //</span>
+            <span id="explainer-title" style="font-size: 11px; color: var(--accent-cyan); display: block; margin-bottom: 15px; font-family: monospace;">INFO //</span>
             <p id="explainer-text"></p>
             
-            <div id="contact-options" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div id="contact-options" style="display: none; grid-template-columns: 1fr 1fr; gap: 15px;">
                 <a href="mailto:luccasmagal@gmail.com" class="action-btn">E-mail</a>
                 <a href="https://wa.me/5583981404889" class="action-btn" target="_blank">WhatsApp</a>
             </div>
@@ -271,13 +302,12 @@
     </div>
 
     <script>
-        // --- BACKGROUND COM INTERAÇÃO DO MOUSE (Lógica Original) ---
+        // --- BACKGROUND COM INTERAÇÃO DO MOUSE ---
         (function() {
             const canvas = document.getElementById('bg-canvas');
             const ctx = canvas.getContext('2d');
             let points = [];
-            let centerX, centerY;
-            const mouse = { x: null, y: null, radius: 120 };
+            const mouse = { x: null, y: null, radius: 150 };
 
             window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
             window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
@@ -285,8 +315,6 @@
             function resize() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-                centerX = canvas.width / 2;
-                centerY = canvas.height / 2;
                 initPoints();
             }
 
@@ -305,14 +333,14 @@
                         const dist = Math.sqrt(dx*dx + dy*dy);
                         if (dist < mouse.radius) {
                             const force = (mouse.radius - dist) / mouse.radius;
-                            this.x += (dx/dist) * force * 10;
-                            this.y += (dy/dist) * force * 10;
+                            this.x += (dx/dist) * force * 8;
+                            this.y += (dy/dist) * force * 8;
                         }
                     }
                     if (this.x < -20 || this.x > canvas.width + 20 || this.y < -20 || this.y > canvas.height + 20) this.init();
                 }
                 draw() {
-                    ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2);
+                    ctx.beginPath(); ctx.arc(this.x, this.y, 1.5, 0, Math.PI*2);
                     ctx.fillStyle = '#00f2ff'; ctx.globalAlpha = 0.3; ctx.fill();
                 }
             }
@@ -329,9 +357,9 @@
                     points[i].update(); points[i].draw();
                     for(let j=i+1; j<points.length; j++) {
                         const d = Math.sqrt((points[i].x-points[j].x)**2 + (points[i].y-points[j].y)**2);
-                        if(d < 150) {
+                        if(d < 180) {
                             ctx.beginPath(); ctx.moveTo(points[i].x, points[i].y); ctx.lineTo(points[j].x, points[j].y);
-                            ctx.strokeStyle = '#00f2ff'; ctx.globalAlpha = (1 - d/150) * 0.15; ctx.stroke();
+                            ctx.strokeStyle = '#00f2ff'; ctx.globalAlpha = (1 - d/180) * 0.15; ctx.stroke();
                         }
                     }
                 }
@@ -341,7 +369,7 @@
             resize(); animate();
         })();
 
-        // --- CONTEÚDO DOS TEXTOS ---
+        // --- CONTEÚDO ---
         const content = {
             sobre: {
                 text: "Designer Gráfico focado em traduzir conceitos em soluções visuais precisas. Com uma base técnica sólida, busco unir estética minimalista e funcionalidade em cada projeto. Desenvolvo identidades que comunicam propósito e interfaces que otimizam a experiência do usuário.",
