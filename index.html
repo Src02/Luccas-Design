@@ -37,48 +37,39 @@
             z-index: -1;
         }
 
-        /* --- CONTAINER DINÂMICO --- */
+        /* --- CONTAINER DINÂMICO (ALINHAMENTO CENTRAL) --- */
         .main-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 90%;
-            max-width: 1100px; /* Aumentado levemente para desktop */
+            max-width: 900px; /* Largura unificada para simetria total */
             margin: 0 auto;
             padding: 5vh 0 80px 0;
-            gap: 30px; /* Mais espaço entre blocos no desktop */
+            gap: 25px; /* Espaçamento vertical consistente */
             z-index: 1;
             position: relative;
         }
 
         /* --- CARD TOPO --- */
         .card {
-            width: 100%;
-            max-width: 480px; /* Um pouco mais largo no desktop */
+            width: 100%; /* Segue a largura do container */
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            min-height: 300px; /* Altura mínima em vez de fixa para acessibilidade */
+            min-height: 300px;
             padding: 40px 20px;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
             border: 1px solid var(--glass-border);
             position: relative;
             border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .card-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
         }
 
         .logo-area svg { width: 100px; height: 100px; fill: var(--accent-cyan); margin-bottom: 20px; }
         
-        /* Tipografia Escalável */
         h1 { font-size: 24px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; text-align: center; }
         .tag { font-size: 12px; opacity: 0.7; margin-top: 10px; letter-spacing: 5px; text-transform: uppercase; }
 
@@ -87,18 +78,18 @@
             .tag { font-size: 14px; }
         }
 
-        /* --- WRAPPER PARA SEÇÕES --- */
+        /* --- SEÇÕES (SKILLS) --- */
         .sections-wrapper {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 25px;
-            width: 100%;
+            gap: 20px;
+            width: 100%; /* Alinhado às bordas do card */
         }
 
         @media (min-width: 768px) {
             .sections-wrapper {
                 grid-template-columns: 1fr 1fr;
-                gap: 35px;
+                gap: 25px;
             }
         }
 
@@ -106,8 +97,9 @@
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            padding: 35px; /* Mais preenchimento */
+            padding: 30px;
             border-radius: 12px;
+            width: 100%;
         }
 
         .info-block h2 {
@@ -119,18 +111,14 @@
             padding-left: 15px;
         }
 
-        @media (min-width: 768px) {
-            .info-block h2 { font-size: 16px; }
-        }
-
         .skills-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
         }
 
         .skill-item {
-            font-size: 12px; /* Aumentado para leitura */
+            font-size: 12px;
             text-transform: uppercase;
             opacity: 0.9;
             display: flex;
@@ -138,11 +126,7 @@
             font-weight: 600;
         }
 
-        @media (min-width: 768px) {
-            .skill-item { font-size: 14px; }
-        }
-
-        .skill-item::before { content: "::"; color: var(--accent-cyan); margin-right: 10px; }
+        .skill-item::before { content: "::"; color: var(--accent-cyan); margin-right: 8px; }
 
         /* --- BOTÕES --- */
         .bottom-links {
@@ -160,10 +144,9 @@
         }
 
         .btn-bottom {
-            min-height: 60px; /* Maior área de clique */
+            min-height: 60px;
             padding: 10px;
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(8px);
             color: var(--text-main);
             border: 1px solid var(--glass-border);
             font-size: 12px;
@@ -174,14 +157,10 @@
             transition: 0.3s;
         }
 
-        @media (min-width: 768px) {
-            .btn-bottom { font-size: 13px; }
-        }
-
         .btn-bottom:hover, .btn-bottom.active {
             background: rgba(0, 242, 255, 0.15);
             border-color: var(--accent-cyan);
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
             transform: translateY(-2px);
         }
 
@@ -191,26 +170,18 @@
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            padding: 40px;
+            padding: 35px;
             display: none;
             border-radius: 12px;
             animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        #explainer-text { 
-            font-size: 14px; 
-            line-height: 1.8; 
-            margin-bottom: 25px; 
-        }
-
-        @media (min-width: 768px) {
-            #explainer-text { font-size: 17px; }
-        }
+        #explainer-text { font-size: 15px; line-height: 1.8; margin-bottom: 25px; }
 
         .action-btn {
             display: inline-flex;
@@ -239,16 +210,14 @@
         <!-- CARD TOPO -->
         <div class="card">
             <div style="font-size: 10px; position: absolute; top: 15px; right: 20px; font-family: monospace; opacity: 0.5; letter-spacing: 1px;">v.1998</div>
-            <div class="card-content">
-                <div class="logo-area">
-                    <svg viewBox="0 0 100 100">
-                        <path d="M10 20V80H35V72H18V20H10ZM40 80H48V35L60 55L72 35V80H80V20H72L60 40L48 20H40V80Z" />
-                        <rect x="10" y="86" width="70" height="4" />
-                    </svg>
-                </div>
-                <h1>Luccas Magalhães</h1>
-                <p class="tag">Graphic Designer</p>
+            <div class="logo-area">
+                <svg viewBox="0 0 100 100">
+                    <path d="M10 20V80H35V72H18V20H10ZM40 80H48V35L60 55L72 35V80H80V20H72L60 40L48 20H40V80Z" />
+                    <rect x="10" y="86" width="70" height="4" />
+                </svg>
             </div>
+            <h1>Luccas Magalhães</h1>
+            <p class="tag">Graphic Designer</p>
         </div>
 
         <!-- SEÇÕES -->
@@ -302,7 +271,7 @@
     </div>
 
     <script>
-        // --- BACKGROUND COM INTERAÇÃO DO MOUSE ---
+        // --- BACKGROUND ---
         (function() {
             const canvas = document.getElementById('bg-canvas');
             const ctx = canvas.getContext('2d');
@@ -369,7 +338,7 @@
             resize(); animate();
         })();
 
-        // --- CONTEÚDO ---
+        // --- CONTEÚDO ORIGINAL ---
         const content = {
             sobre: {
                 text: "Designer Gráfico focado em traduzir conceitos em soluções visuais precisas. Com uma base técnica sólida, busco unir estética minimalista e funcionalidade em cada projeto. Desenvolvo identidades que comunicam propósito e interfaces que otimizam a experiência do usuário.",
