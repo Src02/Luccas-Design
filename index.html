@@ -9,7 +9,8 @@
     <style>
         /* --- VARIÁVEIS --- */
         :root {
-            --bg-blueprint: #0d131c;
+            /* Fundo Azul Marinho Profundo */
+            --bg-blueprint: #00121a; 
             --accent-cyan: #00f2ff;
             --accent-green: #25d366;
             --navy-blue: #080c12;
@@ -30,30 +31,33 @@
             line-height: 1.5;
         }
 
+        /* --- EFEITO CANO DE INFORMAÇÕES (TÚNEL ESTÁTICO) --- */
         #bg-canvas {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: -1;
+            /* Radial preto 85% que escurece conforme se afasta do centro */
+            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.85) 100%);
         }
 
-        /* --- CONTAINER DINÂMICO (ALINHAMENTO CENTRAL) --- */
+        /* --- CONTAINER DINÂMICO --- */
         .main-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 90%;
-            max-width: 900px; /* Largura unificada para simetria total */
+            max-width: 900px;
             margin: 0 auto;
             padding: 5vh 0 80px 0;
-            gap: 25px; /* Espaçamento vertical consistente */
+            gap: 25px;
             z-index: 1;
             position: relative;
         }
 
         /* --- CARD TOPO --- */
         .card {
-            width: 100%; /* Segue a largura do container */
+            width: 100%;
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -66,10 +70,10 @@
             border: 1px solid var(--glass-border);
             position: relative;
             border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         .logo-area svg { width: 100px; height: 100px; fill: var(--accent-cyan); margin-bottom: 20px; }
-        
         h1 { font-size: 24px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; text-align: center; }
         .tag { font-size: 12px; opacity: 0.7; margin-top: 10px; letter-spacing: 5px; text-transform: uppercase; }
 
@@ -83,7 +87,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
-            width: 100%; /* Alinhado às bordas do card */
+            width: 100%;
         }
 
         @media (min-width: 768px) {
@@ -99,7 +103,7 @@
             border: 1px solid var(--glass-border);
             padding: 30px;
             border-radius: 12px;
-            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .info-block h2 {
@@ -174,6 +178,7 @@
             display: none;
             border-radius: 12px;
             animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
 
         @keyframes slideDown {
@@ -270,75 +275,11 @@
         </div>
     </div>
 
+    <!-- 1. IMPORTA O MOTOR JS EXTERNO -->
+    <script src="interactive-bg.js"></script>
+
+    <!-- 2. LÓGICA DE INTERFACE -->
     <script>
-        // --- BACKGROUND ---
-        (function() {
-            const canvas = document.getElementById('bg-canvas');
-            const ctx = canvas.getContext('2d');
-            let points = [];
-            const mouse = { x: null, y: null, radius: 150 };
-
-            window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
-            window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
-
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                initPoints();
-            }
-
-            class Point {
-                constructor() { this.init(true); }
-                init(randomize = false) {
-                    if (randomize) { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; }
-                    else { this.x = Math.random() * canvas.width; this.y = Math.random() > 0.5 ? 0 : canvas.height; }
-                    this.vx = (Math.random() - 0.5) * 0.6;
-                    this.vy = (Math.random() - 0.5) * 0.6;
-                }
-                update() {
-                    this.x += this.vx; this.y += this.vy;
-                    if (mouse.x) {
-                        const dx = this.x - mouse.x; const dy = this.y - mouse.y;
-                        const dist = Math.sqrt(dx*dx + dy*dy);
-                        if (dist < mouse.radius) {
-                            const force = (mouse.radius - dist) / mouse.radius;
-                            this.x += (dx/dist) * force * 8;
-                            this.y += (dy/dist) * force * 8;
-                        }
-                    }
-                    if (this.x < -20 || this.x > canvas.width + 20 || this.y < -20 || this.y > canvas.height + 20) this.init();
-                }
-                draw() {
-                    ctx.beginPath(); ctx.arc(this.x, this.y, 1.5, 0, Math.PI*2);
-                    ctx.fillStyle = '#00f2ff'; ctx.globalAlpha = 0.3; ctx.fill();
-                }
-            }
-
-            function initPoints() {
-                points = [];
-                let count = window.innerWidth < 768 ? 40 : 80;
-                for(let i=0; i<count; i++) points.push(new Point());
-            }
-
-            function animate() {
-                ctx.clearRect(0,0,canvas.width, canvas.height);
-                for(let i=0; i<points.length; i++) {
-                    points[i].update(); points[i].draw();
-                    for(let j=i+1; j<points.length; j++) {
-                        const d = Math.sqrt((points[i].x-points[j].x)**2 + (points[i].y-points[j].y)**2);
-                        if(d < 180) {
-                            ctx.beginPath(); ctx.moveTo(points[i].x, points[i].y); ctx.lineTo(points[j].x, points[j].y);
-                            ctx.strokeStyle = '#00f2ff'; ctx.globalAlpha = (1 - d/180) * 0.15; ctx.stroke();
-                        }
-                    }
-                }
-                requestAnimationFrame(animate);
-            }
-            window.addEventListener('resize', resize);
-            resize(); animate();
-        })();
-
-        // --- CONTEÚDO ORIGINAL ---
         const content = {
             sobre: {
                 text: "Designer Gráfico focado em traduzir conceitos em soluções visuais precisas. Com uma base técnica sólida, busco unir estética minimalista e funcionalidade em cada projeto. Desenvolvo identidades que comunicam propósito e interfaces que otimizam a experiência do usuário.",
