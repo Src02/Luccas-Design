@@ -333,7 +333,8 @@
 
         <!-- LINKS -->
         <div class="bottom-links">
-            <button class="btn-bottom btn-full" onclick="showExplainer('portfolio', this)">Portfolio / Behance</button>
+            <button class="btn-bottom" onclick="showExplainer('sobre', this)">Sobre Mim</button>
+            <button class="btn-bottom" onclick="showExplainer('portfolio', this)">Portfólio</button>
             <button class="btn-bottom" onclick="showExplainer('linkedin', this)">LinkedIn</button>
             <button class="btn-bottom" onclick="showExplainer('contato', this)">Contato</button>
         </div>
@@ -361,7 +362,6 @@
             let centerX, centerY;
             let animationId;
 
-            // Configuração do Mouse
             const mouse = { x: null, y: null, radius: 120 };
 
             const config = { 
@@ -372,7 +372,6 @@
                 maxSpeed: 0.5 
             };
 
-            // Listeners para interação
             window.addEventListener('mousemove', (e) => {
                 mouse.x = e.clientX;
                 mouse.y = e.clientY;
@@ -416,11 +415,9 @@
                 }
 
                 update() {
-                    // Movimento base
                     this.x += this.vx; 
                     this.y += this.vy;
 
-                    // Interação de Repulsão
                     if (mouse.x !== null && mouse.y !== null) {
                         const dxMouse = this.x - mouse.x;
                         const dyMouse = this.y - mouse.y;
@@ -433,7 +430,6 @@
                         }
                     }
 
-                    // Limites e Reset Central
                     const dxCenter = this.x - centerX; 
                     const dyCenter = this.y - centerY;
                     
@@ -493,6 +489,11 @@
 
         // --- LÓGICA DO PAINEL EXPLAINER ---
         const content = {
+            sobre: {
+                text: "Designer Gráfico focado em traduzir conceitos em soluções visuais precisas. Com uma base técnica sólida, busco unir estética minimalista e funcionalidade em cada projeto. Desenvolvo identidades que comunicam propósito e interfaces que otimizam a experiência do usuário.",
+                link: "#",
+                label: ""
+            },
             portfolio: { 
                 text: "Explorar projetos de branding, social media e UI no Behance.", 
                 link: "https://www.behance.net/luccasmagalhes", 
@@ -533,6 +534,9 @@
             if (type === 'contato') {
                 action.style.display = 'none';
                 contactDiv.style.display = 'grid';
+            } else if (type === 'sobre') {
+                action.style.display = 'none'; // Não precisa de botão de link para o Sobre Mim
+                contactDiv.style.display = 'none';
             } else {
                 action.style.display = 'inline-flex';
                 contactDiv.style.display = 'none';
